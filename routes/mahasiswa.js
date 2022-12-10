@@ -3,6 +3,9 @@ const express = require('express')
 const router = express.Router() 
 const Mahasiswa = require('../models/Mahasiswa')
 
+// Import verify token
+const verifyToken = require('../config/verifyToken')
+
 // Create 
 router.post('/', async(req, res) => {
     // tampung input mahasiswa 
@@ -21,8 +24,8 @@ router.post('/', async(req, res) => {
     }
 })
 
-// Read (method GET)
-router.get('/', async(req, res) => {
+// Read (method GET) + verifyToken
+router.get('/',verifyToken, async(req, res) => {
     try {
         const mahasiswa = await Mahasiswa.find()
         res.json(mahasiswa)
